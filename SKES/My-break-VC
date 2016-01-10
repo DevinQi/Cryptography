@@ -1,0 +1,176 @@
+//
+//  main.cpp
+//  Break Vigenere cipher
+//
+//  Created by Devin Qi on 2016-01-06.
+//  Copyright © 2016 Devin Qi. All rights reserved.
+//
+
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+int guesskeylength(string s){
+    float ECF[26];                    //English letter frequency(%) sause from Wiki pedia
+    ECF[0] = 12.702;        //e
+    ECF[1] = 9.056;         //t
+    ECF[2] = 8.167;         //a
+    ECF[3] = 7.507;         //o
+    ECF[4] = 6.966;         //i
+    ECF[5] = 6.749;         //n
+    ECF[6] = 6.327;         //s
+    ECF[7] = 6.094;         //h
+    ECF[8] = 5.987;         //r
+    ECF[9] = 4.253;         //d
+    ECF[10] = 4.025;        //l
+    ECF[11] = 2.782;        //c
+    ECF[12] = 2.758;        //u
+    ECF[13] = 2.406;        //m
+    ECF[14] = 2.361;        //w
+    ECF[15] = 2.228;        //f
+    ECF[16] = 2.015;        //g
+    ECF[17] = 1.974;        //y
+    ECF[18] = 1.929;        //p
+    ECF[19] = 1.492;        //b
+    ECF[20] = 0.978;        //v
+    ECF[21] = 0.772;        //k
+    ECF[22] = 0.153;        //j
+    ECF[23] = 0.151;        //x
+    ECF[24] = 0.095;        //q
+    ECF[25] = 0.074;        //z
+
+    int keylength = 2;
+    int * temp = new int[26];
+    while(1){
+        cout << "Current keylength is " <<keylength<<endl;
+        int cc = 1;
+        for(int i = 0 ; i < keylength;++i){
+            for(int a =0; a< 26;++a){           //set all positions 0
+                temp[a] = 0;
+            }
+            for(int j =0; j< s.length();++j){
+                if(j%keylength == i){
+                    temp[int(s.at(j) - 65)]++;
+                }
+            }
+            for(int x=0; x < 26; ++x){          //sort (decreasing ordder)
+                float max = temp[x];
+                int mp = x;
+                for (int y = x;y<26;++y){
+                    if (temp[y] > max){
+                        max = temp[y];
+                        mp = y;
+                    }
+                }
+                float tv = temp[x];
+                temp[x] = max;
+                temp[mp] = tv;
+            }
+            
+            for(int i = 0;i<26;++i){
+                float p =(temp[i]*1.00)/(s.length()/keylength)*100;
+                cout << i+1 << " = " <<p<<"%"<< "   "<<ECF[i]<<"%" <<endl;
+            }
+            cout << "Do you think this two frequency looks like, Y or N"<<endl;
+            string  check;
+            cin >>check;
+            if(check == "N"){
+                cc = 0;
+                break;
+            }
+        }
+        if (cc == 1){
+            cout << "keylength is " << keylength<<endl;
+            delete temp;
+            return keylength;
+        }else{
+            keylength++;
+        }
+    }
+}
+
+string findshift(string s,int keylength){
+    string result = "";
+    float ECF[26];                    //English letter frequency(%) sause from Wiki pedia
+    ECF[0] = 8.167;                   //alphbet order
+    ECF[1] = 1.492;
+    ECF[2] = 2.782;
+    ECF[3] = 4.253;
+    ECF[4] = 12.702;
+    ECF[5] = 2.228;
+    ECF[6] = 2.015;
+    ECF[7] = 6.094;
+    ECF[8] = 6.966;
+    ECF[9] = 0.153;
+    ECF[10] = 0.772;
+    ECF[11] = 4.025;
+    ECF[12] = 2.406;
+    ECF[13] = 6.749;
+    ECF[14] = 7.507;
+    ECF[15] = 1.929;
+    ECF[16] = 0.095;
+    ECF[17] = 5.987;
+    ECF[18] = 6.327;
+    ECF[19] = 9.056;
+    ECF[20] = 2.758;
+    ECF[21] = 0.978;
+    ECF[22] = 2.361;
+    ECF[23] = 0.151;
+    ECF[24] = 1.974;
+    ECF[25] = 0.074;
+    int * temp = new int[26];
+    for(int i = 0 ; i < keylength;++i){
+        for(int a =0; a< 26;++a){           //set all positions 0
+            temp[a] = 0;
+        }
+        for(int j =0; j< s.length();++j){
+            if(j%keylength == i){
+                temp[int(s.at(j) - 65)]++;
+            }
+        }
+        //start shift
+        int sftn = 0;            //shift number
+        while(1){
+            cout << "now shift right by "<< sftn<<endl;
+            for(int i = 0;i<26;++i){
+                char t = 'A';
+                float p =(temp[i]*1.00)/(s.length()/keylength)*100;
+                cout << t << " = " <<p<<"%"<< "   "<<ECF[i]<<"%" <<endl;
+            }
+            cout << "Do you think shift "<< sftn<<" to the right is good? Y or N"<<endl;
+            string check;
+            cin >> check;
+            if(check == "Y"){
+                break;
+            }
+            ++sftn;
+        }
+        char tt = 'A' + sftn;
+        cout << i+1<< "th character is "<< tt <<endl;
+        result = result + tt;
+    }
+    delete temp;
+    return result;
+}
+
+
+
+int main(){
+    cout<< "Enter the whole text,input end! to end input"<<endl;
+    string temp;
+    string save;
+    while (cin >> temp) {
+        if(temp == "end!"){
+            break;
+        }
+        save = save + temp;
+    }
+    cout << save<<endl;
+    // guess key;
+    int keylength;
+    keylength = guesskeylength(save);
+    //get key value
+    string key = findshift(save, keylength);
+    cout << "Key is " << key<<endl;
+}
