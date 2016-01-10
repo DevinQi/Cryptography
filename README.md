@@ -9,7 +9,14 @@
 
 
 ##### [Symmeic-Key Encryption](https://github.com/DevinQi/Cryptography/tree/master/SKES)
-  * The simple substitution cipher
-  * Polylphabetic cipher
-  * The one-time pad
+ * The simple substitution cipher
+ * Polylphabetic cipher
+ * The one-time pad
+
+#### [Security defination for Symmeic-Key Encryption]()
+ * Adversary's Interaction
+ * Computational Power of adversary
+ * Defination of Secure SKES
+ * Secure of one-time pad
+
   
