@@ -13,7 +13,7 @@
  * Polylphabetic cipher
  * The one-time pad
 
-#### [Security defination for Symmeic-Key Encryption]()
+#### [Security defination for Symmeic-Key Encryption](https://github.com/DevinQi/Cryptography/blob/master/Security-of-SKES/README.md)
  * Adversary's Interaction
  * Computational Power of adversary
  * Defination of Secure SKES
