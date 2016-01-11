@@ -32,9 +32,9 @@
  2. Systematically recover plaintext from ciphertext (without necessarily learning the secret key).
  3. Learn some partial information about the plaintext from the ciphertext (other than its length).
 
+[A mathematical theory of communication](https://archive.org/details/bstj27-3-379)  
 
-
-
+[Communication theory of secrecy systems](https://archive.org/details/bstj28-4-656)
 
 
 
